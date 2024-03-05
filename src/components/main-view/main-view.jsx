@@ -67,11 +67,28 @@ const allMovies = [
   },
 ];
 export const MainView = () => {
-
+  const [movies, setMovies] = useState(allMovies);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  console.log(selectedMovie);
+  if (selectedMovie) {
+    return (
+      <MovieView
+        movie={selectedMovie}
+        onBackClick={() => setSelectedMovie(null)}
+      />
+    );
+  } else {
     return (
       <div>
-
-        
+        {movies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onMovieClick={(newSelectedMovie) => {
+              setSelectedMovie(newSelectedMovie);
+            }}
+          />
+        ))}
       </div>
     );
   }
