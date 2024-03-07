@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+
 //Return bool if movie genre are the same as long as the name is not the same
 const checkMovies = (movie, selected) => {
   return movie.Genre.Name === selected.Genre.Name && movie._id !== selected._id;
