@@ -5,7 +5,7 @@ export const LoginView = ({ onLoggedIn }) => {
   const [password, setPassword] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault(); //prevents the default behavior of the form which is to reload the entire page
-    //data passed as
+    //data object stores user input and passes it to api
     const data = {
       UserName: username,
       Password: password
@@ -22,6 +22,7 @@ export const LoginView = ({ onLoggedIn }) => {
       .then((data) => {
         console.log("Login response: ", data);
         if (data.user) {
+          //storing user and token in localStorage object,
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
@@ -40,7 +41,7 @@ export const LoginView = ({ onLoggedIn }) => {
         <input
           type='text'
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}//set username state with user input
           required
         />
       </label>
@@ -49,7 +50,7 @@ export const LoginView = ({ onLoggedIn }) => {
         <input
           type='password'
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}//set password state with user input
           required
         />
       </label>
