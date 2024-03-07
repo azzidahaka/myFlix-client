@@ -5,23 +5,35 @@ export const LoginView = ({ onLoggedIn }) => {
   const [password, setPassword] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault(); //prevents the default behavior of the form which is to reload the entire page
+    //data passed as
     const data = {
-      access: username,
-      secret: password,
+      UserName: username,
+      Password: password
     };
-    fetch(' https://the-movies-flix-a42e388950f3.herokuapp.com/login', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.ok) {
-        onLoggedIn(username);
-      } else {
-        alert('Login failed');
-      }
-    });
+
+    fetch("https://the-movies-flix-a42e388950f3.herokuapp.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Login response: ", data);
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("token", data.token);
+          onLoggedIn(data.user, data.token);
+        } else {
+          alert("No such user");
+        }
+      })
+      .catch((e) => {
+        alert("Something went wrong");
+      });
   };
   return (
-    
     <form onSubmit={handleSubmit}>
       <label>
         Username:
