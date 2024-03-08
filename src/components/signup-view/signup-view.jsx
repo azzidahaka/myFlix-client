@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
 export const SignupView = () => {
   const [username, setUsername] = useState('');
@@ -33,45 +34,53 @@ export const SignupView = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId='formUsername'>
-        <Form.Label> Username:</Form.Label>
-        <Form.Control
-          type='text'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)} //set username state with user input
-          required
-          minLength='3'
-        />
-      </Form.Group>
-      <Form.Group controlId='formPassword'>
-        <Form.Label> Password:</Form.Label>
-        <Form.Control
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId='formBirthday'>
-        <Form.Label> Birthday:</Form.Label>
-        <Form.Control
-          type='date'
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId='formEmail'>
-        <Form.Label> Email:</Form.Label>
-        <Form.Control
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </Form.Group>
-      <button type='submit'>Submit</button>
-    </Form>
+    <Row>
+      <Col>
+        <Card>
+          <CardBody>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId='formUsername'>
+                <Form.Label> Username:</Form.Label>
+                <Form.Control
+                  type='text'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)} //set username state with user input
+                  required
+                  minLength='3'
+                />
+              </Form.Group>
+              <Form.Group controlId='formPassword'>
+                <Form.Label> Password:</Form.Label>
+                <Form.Control
+                  type='password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId='formBirthday'>
+                <Form.Label> Birthday:</Form.Label>
+                <Form.Control
+                  type='date'
+                  value={birthday}
+                  onChange={(e) => setBirthday(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId='formEmail'>
+                <Form.Label> Email:</Form.Label>
+                <Form.Control
+                  type='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <button type='submit'>Submit</button>
+            </Form>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
   );
 };

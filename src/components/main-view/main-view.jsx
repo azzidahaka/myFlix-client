@@ -35,69 +35,58 @@ export const MainView = () => {
   const similarMovies = selectedMovie ? movies.filter((movie) => checkMovies(movie, selectedMovie)) : [];
   return (
     <Row className='align-items-center justify-content-center vh-100 '>
-      {!user ? (
-        !newUser ? (
-          <Col lg='5'>
-            <LoginView
-              //set created user and token
-              onLoggedIn={(user, token) => {
-                setUser(user);
-                setToken(token);
-              }}
-            />
+      {!user && !newUser && (
+        <Col lg='5'>
 
-            <button
-              onClick={() => {
-                setNewUser(1);
-              }}
-            >
-              Signup
-            </button>
-          </Col>
-        ) : (
-          <Col>
-            <SignupView />
-            <button
-              onClick={() => {
-                setNewUser(null);
-              }}
-            >
-              Have an account?
-            </button>
-          </Col>
-        )
-      ) : selectedMovie ? (
-        <Col>
-          <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
+          <LoginView
+            //set created user and token
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
           />
-          {/* Check if there are similar movies and render accordinly */}
-          {similarMovies.length !== 0 && (
-            <>
-              <h2>Similar Movies</h2>
-              {similarMovies.map((movie) => (
-                <MovieCard
-                  key={movie._id}
-                  movie={movie}
-                  onMovieClick={(newSelectedMovie) => {
-                    setSelectedMovie(newSelectedMovie);
-                  }}
-                />
-              ))}
-            </>
-          )}
+
+          <button onClick={() => setNewUser(1)}>Signup</button>
         </Col>
-      ) : (
+      )}
+      {!user && newUser && (
+        <Col>
+          <SignupView />
+          <button onClick={() => setNewUser(null)}>Have an account?</button>
+        </Col>
+      )}
+      {user && selectedMovie &&
+        (() => {
+          return (
+            <Col>
+              <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+              />
+              {/* Check if there are similar movies and render accordinly */}
+              {similarMovies.length !== 0 && (
+                <>
+                  <h2>Similar Movies</h2>
+                  {similarMovies.map((movie) => (
+                    <MovieCard
+                      key={movie._id}
+                      movie={movie}
+                      onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
+                    />
+                  ))}
+                </>
+              )}
+            </Col>
+          );
+        })()}
+      {user && !selectedMovie && (
         <>
           {movies.map((movie) => (
             <Col>
               <MovieCard
                 key={movie._id}
                 movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie);
-                }}
+                onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
               />
             </Col>
           ))}
@@ -107,8 +96,7 @@ export const MainView = () => {
               setUser(null);
               setToken(null);
               localStorage.clear();
-            }}
-          >
+            }}>
             Logout
           </button>
         </>

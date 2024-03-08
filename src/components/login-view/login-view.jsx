@@ -35,10 +35,8 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
       });
   };
   return (
-
-
       <Row>
-        <Col >
+        <Col>
           <Card>
             <CardBody>
               <Form onSubmit={handleSubmit}>
