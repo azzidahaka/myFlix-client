@@ -1,95 +1,100 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
-const allMovies = [
-  {
-    id: 1,
-    title: 'Silence of the Lambs',
-    description:
-      'A young FBI cadet must recieve the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.',
-    genre: {
-      name: 'Thriller',
-      description:
-        'Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excittement and suspense in the audience.',
-    },
-    director: {
-      name: 'Jonathan Demme',
-      bio: 'Robert Jonathan Demme was an American director, producer, and screenwriter.',
-      birth: '1944',
-      death: '2017',
-    },
-    imagePath:
-      'https://m.media-amazon.com/images/M/MV5BNjNhZTk0ZmEtNjJhMi00YzFlLWE1MmEtYzM1M2ZmMGMwMTU4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg',
-    featured: true,
-    actors: ['Anthony Hopkins', 'Jodie Foster'],
-  },
-  {
-    id: 2,
-    title: 'The Shawshank Redemption',
-    description:
-      'Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.',
-    genre: {
-      name: 'Drama',
-      description:
-        'Drama film is a genre that relies on the emotional and relational development of realistic characters',
-    },
-    director: {
-      name: 'Frank Darabont',
-      bio: 'Three-time Oscar nominee Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France, the son of Hungarian parents who had fled Budapest during the failed 1956 Hungarian revolution.',
-      birth: '1959',
-      death: '--',
-    },
-    imagePath:
-      'https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg',
-    featured: true,
-    actors: ['Tim Robbins', 'Morgan Freeman', 'Bob Gunton', 'William Sadler'],
-  },
-  {
-    id: 3,
-    title: 'The Godfather',
-    description:
-      'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.',
-    genre: {
-      name: 'Drama',
-      description:
-        'Drama film is a genre that relies on the emotional and relational development of realistic characters',
-    },
-    director: {
-      name: 'Francis ford Coppola',
-      bio: 'Francis Ford Coppola was born in 1939 in Detroit, Michigan, but grew up in a New York suburb in a creative, supportive Italian-American family.',
-      birth: '1939',
-      death: '--',
-    },
-    imagePath:
-      'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UX1000_.jpg',
-    featured: true,
-    actors: ['Marlon Brando', 'Al Pacino', 'James Caan', 'Diane Keaton'],
-  },
-];
+import { LoginView } from '../login-view/login-view';
+import { SignupView } from '../signup-view/signup-view';
+//Return bool if movie genre are the same as long as the name is not the same
+const checkMovies = (movie, selected) => {
+  return movie.Genre.Name === selected.Genre.Name && movie._id !== selected._id;
+};
+
 export const MainView = () => {
-  const [movies, setMovies] = useState(allMovies);
+  //assign variables the value saved in localStorage
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const storedToken = localStorage.getItem('token');
+  //check if  there is data in localStorage and set state as local Storage if true or null if false
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  console.log(selectedMovie);
-  if (selectedMovie) {
+  useEffect(() => {
+    if (!token) return; //return if token is empty
+
+    fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((moviesFromApi) => {
+        setMovies(moviesFromApi);
+      });
+  }, [token]); //a dependency array that calls fetch every time token changes
+
+  //Start on login page if there is no active user
+  if (!user) {
     return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={() => setSelectedMovie(null)}
-      />
-    );
-  } else {
-    return (
-      <div>
-        {movies.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            onMovieClick={(newSelectedMovie) => {
-              setSelectedMovie(newSelectedMovie);
-            }}
-          />
-        ))}
-      </div>
+      <>
+        <LoginView
+          //set created user and token
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or
+        <SignupView />
+      </>
     );
   }
+
+  if (selectedMovie) {
+    //filter movies by genre
+    let similarMovies = movies.filter((movie) => checkMovies(movie, selectedMovie));
+    return (
+      <>
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={() => setSelectedMovie(null)}
+        />
+        {/* Check if there are similar movies and render accordinly */}
+        {similarMovies.length !== 0 && (
+          <>
+            <h2>Similar Movies</h2>
+            {similarMovies.map((movie) => (
+              <MovieCard
+                key={movie._id}
+                movie={movie}
+                onMovieClick={(newSelectedMovie) => {
+                  setSelectedMovie(newSelectedMovie);
+                }}
+              />
+            ))}
+          </>
+        )}
+      </>
+    );
+  }
+  return (
+    <div>
+      {movies.map((movie) => (
+        <MovieCard
+          key={movie._id}
+          movie={movie}
+          onMovieClick={(newSelectedMovie) => {
+            setSelectedMovie(newSelectedMovie);
+          }}
+        />
+      ))}
+      {/* set user and token to null on logout click */}
+      <button
+        onClick={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      >
+        Logout
+      </button>
+    </div>
+  );
 };
