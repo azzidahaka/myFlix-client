@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
 export const LoginView = ({ onLoggedIn, onNewClick }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -35,27 +35,40 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
       });
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId='formUsername'>
-        <Form.Label> Username:</Form.Label>
-        <Form.Control
-          type='text'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)} //set username state with user input
-          required
-          minLength='3'
-        />
-      </Form.Group>
-      <Form.Group controlId='formPassword'>
-        <Form.Label> Password:</Form.Label>
-        <Form.Control
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)} //set password state with user input
-          required
-        />
-      </Form.Group>
-      <button type='submit'>Submit</button>
-    </Form>
+    <Container>
+      <Row>
+        <Col>1 of 1</Col>
+      </Row>
+      <Row>
+        <Col>
+          <Card>
+            <CardBody>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId='formUsername'>
+                  <Form.Label> Username:</Form.Label>
+                  <Form.Control
+                    type='text'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)} //set username state with user input
+                    required
+                    minLength='3'
+                  />
+                </Form.Group>
+                <Form.Group controlId='formPassword'>
+                  <Form.Label> Password:</Form.Label>
+                  <Form.Control
+                    type='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} //set password state with user input
+                    required
+                  />
+                </Form.Group>
+                <button type='submit'>Submit</button>
+              </Form>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
