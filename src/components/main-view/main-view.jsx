@@ -34,10 +34,9 @@ export const MainView = () => {
   //Start on login page if there is no active user
   const similarMovies = selectedMovie ? movies.filter((movie) => checkMovies(movie, selectedMovie)) : [];
   return (
-    <Row className='align-items-center justify-content-center vh-100 '>
+    <Row className='align-items-center justify-content-center vh-100 flex-shrink-0 '>
       {!user && !newUser && (
         <Col md={5}>
-
           <LoginView
             //set created user and token
             onLoggedIn={(user, token) => {
@@ -55,10 +54,11 @@ export const MainView = () => {
           <button onClick={() => setNewUser(null)}>Have an account?</button>
         </Col>
       )}
-      {user && selectedMovie &&
+      {user &&
+        selectedMovie &&
         (() => {
           return (
-            <Col md = {8}>
+            <Col md={8}>
               <MovieView
                 movie={selectedMovie}
                 onBackClick={() => setSelectedMovie(null)}
@@ -68,15 +68,17 @@ export const MainView = () => {
                 <>
                   <h2>Similar Movies</h2>
                   <Row>
-                  {similarMovies.map((movie) => (
-                    <Col className="mb-4 " key={movie.id} md={3}>
-                    <MovieCard
-                      movie={movie}
-                      onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
-                    />
-                  </Col>
-
-                  ))}
+                    {similarMovies.map((movie) => (
+                      <Col
+                        className='mb-4 '
+                        key={movie.id}
+                        md={3}>
+                        <MovieCard
+                          movie={movie}
+                          onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
+                        />
+                      </Col>
+                    ))}
                   </Row>
                 </>
               )}
@@ -84,17 +86,23 @@ export const MainView = () => {
           );
         })()}
       {user && !selectedMovie && (
-        <Row className='align-item-stretch'>
-          {movies.map((movie) => (
-            <Col className="mb-4 " key={movie.id} md={3}>
-              <MovieCard
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
-              />
-            </Col>
-          ))}
-          {/* set user and token to null on logout click */}
+        <>
+          <Row className='align-item-stretch'>
+            {movies.map((movie) => (
+              <Col
+                className='mb-4 '
+                key={movie.id}
+                md={3}>
+                <MovieCard
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
+                />
+              </Col>
+            ))}
+            {/* set user and token to null on logout click */}
+          </Row>
           <button
+            style={{ width: '100px', height: '30px' }}
             onClick={() => {
               setUser(null);
               setToken(null);
@@ -102,7 +110,7 @@ export const MainView = () => {
             }}>
             Logout
           </button>
-        </Row>
+        </>
       )}
     </Row>
   );
