@@ -35,12 +35,10 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
       });
   };
   return (
-    <Container>
+
+
       <Row>
-        <Col>1 of 1</Col>
-      </Row>
-      <Row>
-        <Col>
+        <Col >
           <Card>
             <CardBody>
               <Form onSubmit={handleSubmit}>
@@ -69,6 +67,6 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
           </Card>
         </Col>
       </Row>
-    </Container>
+
   );
 };
