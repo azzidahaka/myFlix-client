@@ -36,7 +36,7 @@ export const MainView = () => {
   return (
     <Row className='align-items-center justify-content-center vh-100 '>
       {!user && !newUser && (
-        <Col lg='5'>
+        <Col md={5}>
 
           <LoginView
             //set created user and token
@@ -58,7 +58,7 @@ export const MainView = () => {
       {user && selectedMovie &&
         (() => {
           return (
-            <Col>
+            <Col md = {8}>
               <MovieView
                 movie={selectedMovie}
                 onBackClick={() => setSelectedMovie(null)}
@@ -67,24 +67,27 @@ export const MainView = () => {
               {similarMovies.length !== 0 && (
                 <>
                   <h2>Similar Movies</h2>
+                  <Row>
                   {similarMovies.map((movie) => (
+                    <Col className="mb-4 " key={movie.id} md={3}>
                     <MovieCard
-                      key={movie._id}
                       movie={movie}
                       onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
                     />
+                  </Col>
+
                   ))}
+                  </Row>
                 </>
               )}
             </Col>
           );
         })()}
       {user && !selectedMovie && (
-        <>
+        <Row className='align-item-stretch'>
           {movies.map((movie) => (
-            <Col>
+            <Col className="mb-4 " key={movie.id} md={3}>
               <MovieCard
-                key={movie._id}
                 movie={movie}
                 onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
               />
@@ -99,7 +102,7 @@ export const MainView = () => {
             }}>
             Logout
           </button>
-        </>
+        </Row>
       )}
     </Row>
   );
