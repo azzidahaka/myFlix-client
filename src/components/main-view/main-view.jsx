@@ -18,6 +18,7 @@ export const MainView = () => {
 
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [newUser, setNewUser] = useState(null);
   useEffect(() => {
     if (!token) return; //return if token is empty
 
@@ -34,15 +35,36 @@ export const MainView = () => {
   if (!user) {
     return (
       <>
-        <LoginView
-          //set created user and token
-          onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-        or
-        <SignupView />
+        {!newUser ? (
+          <>
+            <LoginView
+              //set created user and token
+              onLoggedIn={(user, token) => {
+                setUser(user);
+                setToken(token);
+              }}
+            />
+
+            <button
+              onClick={() => {
+                setNewUser(1);
+              }}
+            >
+              Signup
+            </button>
+          </>
+        ) : (
+          <>
+            <SignupView />
+            <button
+              onClick={() => {
+                setNewUser(null);
+              }}
+            >
+              Have an account?
+            </button>
+          </>
+        )}
       </>
     );
   }
