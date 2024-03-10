@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-export const MovieView = ({ movie, onBackClick}) => {
+export const MovieView = ({ movie}) => {
   return (
     <div>
       <div>
@@ -26,7 +27,9 @@ export const MovieView = ({ movie, onBackClick}) => {
         <span>Director: </span>
         <span>{movie.Director.Name}</span>
       </div>
-      <button onClick={onBackClick}>Back</button>
+      <Link to={`/`}>
+        <button className="back-button">Back</button>
+      </Link>
     </div>
   );
 };

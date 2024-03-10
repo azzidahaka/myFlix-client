@@ -3,7 +3,9 @@ import { Col, Row } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
+import { ProfileView } from '../profile-view/profile-view';
 import { SignupView } from '../signup-view/signup-view';
+import { NavigationBar } from '../navigation-bar/navigation-bar';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 //Return bool if movie genre are the same as long as the name is not the same
@@ -37,6 +39,12 @@ export const MainView = () => {
   const similarMovies = selectedMovie ? movies.filter((movie) => checkMovies(movie, selectedMovie)) : [];
   return (
     <BrowserRouter>
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+        }}
+      />
       <Row className='align-items-center justify-content-center vh-100 flex-shrink-0 '>
         <Routes>
           <Route
@@ -86,10 +94,7 @@ export const MainView = () => {
                   (() => {
                     return (
                       <Col md={8}>
-                        <MovieView
-                          movie={selectedMovie}
-                          onBackClick={() => setSelectedMovie(null)}
-                        />
+                        <MovieView movie={selectedMovie} />
                         {/* Check if there are similar movies and render accordinly */}
                         {similarMovies.length !== 0 && (
                           <>
@@ -98,12 +103,9 @@ export const MainView = () => {
                               {similarMovies.map((movie) => (
                                 <Col
                                   className='mb-4 '
-                                  key={movie.id}
+                                  key={movie._id}
                                   md={3}>
-                                  <MovieCard
-                                    movie={movie}
-                                    onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
-                                  />
+                                  <MovieCard movie={movie} />
                                 </Col>
                               ))}
                             </Row>
@@ -127,35 +129,39 @@ export const MainView = () => {
                   />
                 ) : (
                   <>
-              <Row className='align-item-stretch'>
-                {movies.map((movie) => (
-                  <Col
-                    className='mb-4 '
-                    key={movie._id}
-                    md={3}>
-                    <MovieCard
-                      movie={movie}
-                      onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
-                    />
-                  </Col>
-                ))}
-                {/* set user and token to null on logout click */}
-              </Row>
-              <button
-                style={{ width: '100px', height: '30px' }}
-                onClick={() => {
-                  setUser(null);
-                  setToken(null);
-                  localStorage.clear();
-                }}>
-                Logout
-              </button>
-            </>
+                    <Row className='align-item-stretch'>
+                      {movies.map((movie) => (
+                        <Col
+                          className='mb-4 '
+                          key={movie._id}
+                          md={3}>
+                          <MovieCard
+                            movie={movie}
+                            onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
+                          />
+                        </Col>
+                      ))}
+                      {/* set user and token to null on logout click */}
+                    </Row>
+                    <button
+                      style={{ width: '100px', height: '30px' }}
+                      onClick={() => {
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                      }}>
+                      Logout
+                    </button>
+                  </>
                 )}
               </>
             }
           />
-      
+          <Route
+            path='/users'
+            element={
+            <ProfileView user={user} movie={movies}/>
+          />
         </Routes>
       </Row>{' '}
     </BrowserRouter>
