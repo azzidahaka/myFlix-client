@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
@@ -18,6 +19,7 @@ export const MainView = () => {
 
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [newUser, setNewUser] = useState(null);
   useEffect(() => {
     if (!token) return; //return if token is empty
 
@@ -29,72 +31,87 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]); //a dependency array that calls fetch every time token changes
-
   //Start on login page if there is no active user
-  if (!user) {
-    return (
-      <>
-        <LoginView
-          //set created user and token
-          onLoggedIn={(user, token) => {
-            setUser(user);
-            setToken(token);
-          }}
-        />
-        or
-        <SignupView />
-      </>
-    );
-  }
-
-  if (selectedMovie) {
-    //filter movies by genre
-    let similarMovies = movies.filter((movie) => checkMovies(movie, selectedMovie));
-    return (
-      <>
-        <MovieView
-          movie={selectedMovie}
-          onBackClick={() => setSelectedMovie(null)}
-        />
-        {/* Check if there are similar movies and render accordinly */}
-        {similarMovies.length !== 0 && (
-          <>
-            <h2>Similar Movies</h2>
-            {similarMovies.map((movie) => (
-              <MovieCard
-                key={movie._id}
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie);
-                }}
-              />
-            ))}
-          </>
-        )}
-      </>
-    );
-  }
+  const similarMovies = selectedMovie ? movies.filter((movie) => checkMovies(movie, selectedMovie)) : [];
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie._id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
-          }}
-        />
-      ))}
-      {/* set user and token to null on logout click */}
-      <button
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      >
-        Logout
-      </button>
-    </div>
+    <Row className='align-items-center justify-content-center vh-100 flex-shrink-0 '>
+      {!user && !newUser && (
+        <Col md={5}>
+          <LoginView
+            //set created user and token
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+
+          <button onClick={() => setNewUser(1)}>Signup</button>
+        </Col>
+      )}
+      {!user && newUser && (
+        <Col>
+          <SignupView />
+          <button onClick={() => setNewUser(null)}>Have an account?</button>
+        </Col>
+      )}
+      {user &&
+        selectedMovie &&
+        (() => {
+          return (
+            <Col md={8}>
+              <MovieView
+                movie={selectedMovie}
+                onBackClick={() => setSelectedMovie(null)}
+              />
+              {/* Check if there are similar movies and render accordinly */}
+              {similarMovies.length !== 0 && (
+                <>
+                  <h2>Similar Movies</h2>
+                  <Row>
+                    {similarMovies.map((movie) => (
+                      <Col
+                        className='mb-4 '
+                        key={movie.id}
+                        md={3}>
+                        <MovieCard
+                          movie={movie}
+                          onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                </>
+              )}
+            </Col>
+          );
+        })()}
+      {user && !selectedMovie && (
+        <>
+          <Row className='align-item-stretch'>
+            {movies.map((movie) => (
+              <Col
+                className='mb-4 '
+                key={movie.id}
+                md={3}>
+                <MovieCard
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
+                />
+              </Col>
+            ))}
+            {/* set user and token to null on logout click */}
+          </Row>
+          <button
+            style={{ width: '100px', height: '30px' }}
+            onClick={() => {
+              setUser(null);
+              setToken(null);
+              localStorage.clear();
+            }}>
+            Logout
+          </button>
+        </>
+      )}
+    </Row>
   );
 };
