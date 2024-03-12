@@ -82,7 +82,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path='/movies/:title'
+            path='/movies/:movieID'
             element={
               <>
                 {!user ? (
@@ -94,7 +94,7 @@ export const MainView = () => {
                   (() => {
                     return (
                       <Col md={8}>
-                        <MovieView movie={selectedMovie} />
+                        <MovieView movies={movies} />
                         {/* Check if there are similar movies and render accordinly */}
                         {similarMovies.length !== 0 && (
                           <>
@@ -137,7 +137,6 @@ export const MainView = () => {
                           md={3}>
                           <MovieCard
                             movie={movie}
-                            onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)}
                           />
                         </Col>
                       ))}
@@ -160,7 +159,7 @@ export const MainView = () => {
           <Route
             path='/users'
             element={
-            <ProfileView user={user} movie={movies}/>
+            <ProfileView user={user} onUpdatedUserInfo={() => }/>}
           />
         </Routes>
       </Row>{' '}
