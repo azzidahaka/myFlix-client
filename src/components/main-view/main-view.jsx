@@ -45,7 +45,7 @@ export const MainView = () => {
           setUser(null);
         }}
       />
-      <Row className='align-items-center justify-content-center vh-100 flex-shrink-0 '>
+      <Row className=' vh-100'>
         <Routes>
           <Route
             path='/signup'
@@ -135,9 +135,7 @@ export const MainView = () => {
                           className='mb-4 '
                           key={movie._id}
                           md={3}>
-                          <MovieCard
-                            movie={movie}
-                          />
+                          <MovieCard movie={movie} />
                         </Col>
                       ))}
                       {/* set user and token to null on logout click */}
@@ -159,7 +157,13 @@ export const MainView = () => {
           <Route
             path='/users'
             element={
-            <ProfileView user={user} onUpdatedUserInfo={() => }/>}
+              <Row>
+                <ProfileView
+                  movies={movies}
+                  onUpdatedUserInfo={() => null}
+                />
+              </Row>
+            }
           />
         </Routes>
       </Row>{' '}

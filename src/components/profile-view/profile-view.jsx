@@ -6,24 +6,36 @@ import { FavoriteMovies } from './favorite-movies';
 import { UserInfo } from './user-info';
 import { Link } from 'react-router-dom';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
+import { UpdateUser } from './update-user';
 
 export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
-  const [user, setUser] = useState({});
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [favoriteMovies, setFavoriteMovies] = useState('');
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const favoriteMoviesList = movies.filter((m) => user.FavoriteMovies.includes(m._id));
+  //console.log(user);
 
+  // console.log(favoriteMovies);
   return (
-    <>
-      <UserInfo
-        name={user.UserName}
-        email={user.Email}
-      />
-        <FavoriteMovies
-            favoriteMovies={favoriteMovies}/>
-    </>
+    <Container>
+      <Row>
+        <Col
+          xs={12}
+          sm={4}>
+          <UserInfo
+            name={user.UserName}
+            email={user.Email}
+          />
+        </Col>
+        <Col
+          xs={12}
+          sm={4}>
+          <UpdateUser
+            user={user}
+            setUser={setUser}
+          />
+        </Col>
+      </Row>
+      <FavoriteMovies favoriteMoviesList={favoriteMoviesList} />
+    </Container>
   );
 };
 
