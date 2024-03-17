@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 export const SignupView = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -16,7 +19,6 @@ export const SignupView = () => {
       Email: email,
       Birthday: birthday,
     };
-
     fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/users', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -26,9 +28,10 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert('Signup successful');
-        window.location.reload();
+        navigate('/login');
       } else {
         alert('Signup failed');
+        console.log(response);
       }
     });
   };

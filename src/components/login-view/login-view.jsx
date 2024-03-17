@@ -10,7 +10,7 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
       UserName: username,
       Password: password,
     };
-
+    
     fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/login', {
       method: 'POST',
       headers: {

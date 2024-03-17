@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 //MovieCard components
 export const MovieCard = ({ movie }) => {
+  
   const addFavorite = (movieId) => {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));

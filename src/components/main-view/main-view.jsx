@@ -35,6 +35,9 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]); //a dependency array that calls fetch every time token changes
+  console.log('From main view');
+  console.log(localStorage);
+
   //Start on login page if there is no active user
   const similarMovies = selectedMovie ? movies.filter((movie) => checkMovies(movie, selectedMovie)) : [];
   return (
@@ -92,6 +95,7 @@ export const MainView = () => {
                   />
                 ) : (
                   (() => {
+
                     return (
                       <Col md={8}>
                         <MovieView movies={movies} />
@@ -129,7 +133,9 @@ export const MainView = () => {
                   />
                 ) : (
                   <>
+
                     <Row className='align-item-stretch'>
+                      { console.log('movies: ', user)}
                       {movies.map((movie) => (
                         <Col
                           className='mb-4 '
