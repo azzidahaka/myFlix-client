@@ -22,8 +22,8 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
 
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [newUser, setNewUser] = useState(null);
+  // const [selectedMovie, setSelectedMovie] = useState(null);
+  // const [newUser, setNewUser] = useState(null);
   useEffect(() => {
     if (!token) return; //return if token is empty
 
@@ -35,16 +35,15 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]); //a dependency array that calls fetch every time token changes
-  console.log('From main view');
-  console.log(localStorage);
 
   //Start on login page if there is no active user
-  const similarMovies = selectedMovie ? movies.filter((movie) => checkMovies(movie, selectedMovie)) : [];
+
   return (
     <BrowserRouter>
       <NavigationBar
         user={user}
         onLoggedOut={() => {
+          localStorage.clear();
           setUser(null);
         }}
       />
@@ -98,23 +97,8 @@ export const MainView = () => {
 
                     return (
                       <Col md={8}>
-                        <MovieView movies={movies} />
-                        {/* Check if there are similar movies and render accordinly */}
-                        {similarMovies.length !== 0 && (
-                          <>
-                            <h2>Similar Movies</h2>
-                            <Row>
-                              {similarMovies.map((movie) => (
-                                <Col
-                                  className='mb-4 '
-                                  key={movie._id}
-                                  md={3}>
-                                  <MovieCard movie={movie} />
-                                </Col>
-                              ))}
-                            </Row>
-                          </>
-                        )}
+                        <MovieView movies={movies} checkMovies={checkMovies}/>
+
                       </Col>
                     );
                   })()
@@ -135,7 +119,7 @@ export const MainView = () => {
                   <>
 
                     <Row className='align-item-stretch'>
-                      { console.log('movies: ', user)}
+
                       {movies.map((movie) => (
                         <Col
                           className='mb-4 '
