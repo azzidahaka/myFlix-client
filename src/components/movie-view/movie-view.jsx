@@ -10,6 +10,17 @@ export const MovieView = ({ movies, checkMovies }) => {
   console.log(movies);
   console.log('ID: ' + movieID);
   const movie = movies.find((m) => m._id === movieID);
+  if (!movie) {
+    return (
+      <>
+        <div>Movie not found</div>
+        <Link to={`/`}>
+          <button className='back-button'>Back</button>
+        </Link>
+      </>
+    );
+  }
+
   const similarMovies = movies.filter((m) => checkMovies(m, movie));
   console.log(similarMovies);
   return (

@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 //MovieCard components
 export const MovieCard = ({ movie }) => {
-
+  const user = JSON.parse(localStorage.getItem('user'));
+  const [favorite, setFavorite] = useState(user.FavoriteMovies.includes(movie._id));
   const addFavorite = (movieId) => {
     const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+
     let url = `https://the-movies-flix-a42e388950f3.herokuapp.com/users/${user.UserName}/movies/${movieId}`;
     fetch(url, {
       method: 'POST',
@@ -18,8 +20,10 @@ export const MovieCard = ({ movie }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-         localStorage.setItem('user', JSON.stringify(data));
-         console.log(data);
+        localStorage.setItem('user', JSON.stringify(data));
+        //setFavorite(user.FavoriteMovies.includes(movie._id));
+        setFavorite(true);
+        console.log(data);
       })
       .catch((error) => {
         console.error(error);
@@ -38,7 +42,8 @@ export const MovieCard = ({ movie }) => {
         <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
           <Button>More</Button>
         </Link>
-        <Button onClick={() => addFavorite(movie._id)}>Favorite</Button>
+        {}
+        {!favorite && <Button onClick={() => addFavorite(movie._id)}>Favorite</Button>}
       </Card.Body>
     </Card>
   );
@@ -56,5 +61,5 @@ MovieCard.propTypes = {
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
     }).isRequired,
-  }).isRequired
+  }).isRequired,
 };

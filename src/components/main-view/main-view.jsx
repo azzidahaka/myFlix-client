@@ -45,6 +45,7 @@ export const MainView = () => {
         onLoggedOut={() => {
           localStorage.clear();
           setUser(null);
+          setToken(null);
         }}
       />
       <Row className=' vh-100'>
@@ -94,11 +95,12 @@ export const MainView = () => {
                   />
                 ) : (
                   (() => {
-
                     return (
                       <Col md={8}>
-                        <MovieView movies={movies} checkMovies={checkMovies}/>
-
+                        <MovieView
+                          movies={movies}
+                          checkMovies={checkMovies}
+                        />
                       </Col>
                     );
                   })()
@@ -117,9 +119,7 @@ export const MainView = () => {
                   />
                 ) : (
                   <>
-
                     <Row className='align-item-stretch'>
-
                       {movies.map((movie) => (
                         <Col
                           className='mb-4 '
@@ -147,15 +147,22 @@ export const MainView = () => {
           <Route
             path='/users'
             element={
-              <Row>
-                <ProfileView
-                  movies={movies}
-                />
-              </Row>
+              <>
+                {!user ? (
+                  <Navigate
+                    to='/login'
+                    replace
+                  />
+                ) : (
+                  <Row>
+                    <ProfileView movies={movies} />
+                  </Row>
+                )}
+              </>
             }
           />
         </Routes>
-      </Row>{' '}
+      </Row>
     </BrowserRouter>
   );
 };
