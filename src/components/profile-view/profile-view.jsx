@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
 import { UpdateUser } from './update-user';
 
-export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
+export const ProfileView = ({ movies }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const favoriteMoviesList = movies.filter((m) => user.FavoriteMovies.includes(m._id));
   //console.log(user);
@@ -39,4 +39,7 @@ export const ProfileView = ({ movies, onUpdatedUserInfo }) => {
   );
 };
 
-//Def
+//Define the prop types expected by the component
+ProfileView.propTypes = {
+  movies: PropTypes.array.isRequired,
+};

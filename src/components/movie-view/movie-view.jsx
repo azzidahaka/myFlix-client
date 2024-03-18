@@ -61,17 +61,7 @@ export const MovieView = ({ movies, checkMovies }) => {
 };
 
 //Define props constraint for view
-//  MovieView.propTypes = {
-//   movie: PropTypes.shape({
-//     _id: PropTypes.string.isRequired,
-//     Title: PropTypes.string.isRequired,
-//     ImagePath: PropTypes.string.isRequired,
-//     Genre: PropTypes.shape({
-//       Name: PropTypes.string.isRequired
-//     }).isRequired,
-//     Director: PropTypes.shape({
-//       Name: PropTypes.string.isRequired
-//     }).isRequired,
-//   }).isRequired,
-//   onBackClick: PropTypes.func.isRequired,
-// };
+MovieView.propTypes = {
+  movies: PropTypes.array.isRequired,
+  checkMovies: PropTypes.func.isRequired,
+};

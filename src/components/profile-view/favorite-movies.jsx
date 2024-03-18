@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Figure, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import './profile-view.scss';
 
 export const FavoriteMovies = ({ favoriteMoviesList }) => {
@@ -67,4 +68,8 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
       </Card.Body>
     </Card>
   );
+};
+//Define props constraint for favorite movies
+FavoriteMovies.propTypes = {
+  favoriteMoviesList: PropTypes.array.isRequired,
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
-export const LoginView = ({ onLoggedIn, onNewClick }) => {
+export const LoginView = ({ onLoggedIn  }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const handleSubmit = (event) => {
@@ -10,7 +11,7 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
       UserName: username,
       Password: password,
     };
-    
+
     fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/login', {
       method: 'POST',
       headers: {
@@ -67,4 +68,9 @@ export const LoginView = ({ onLoggedIn, onNewClick }) => {
       </Row>
 
   );
+};
+
+//Define props constraint for loginview
+LoginView.propTypes = {
+  onLoggedIn: PropTypes.func.isRequired,
 };

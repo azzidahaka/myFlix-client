@@ -104,3 +104,12 @@ export const UpdateUser = ({ user, setUser }) => {
     </>
   );
 };
+//define the prop types expected by the component
+UpdateUser.propTypes = {
+  user: PropTypes.shape({
+    UserName: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string,
+  }).isRequired,
+  setUser: PropTypes.func.isRequired,
+};

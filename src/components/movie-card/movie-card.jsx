@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 //MovieCard components
 export const MovieCard = ({ movie }) => {
-  
+
   const addFavorite = (movieId) => {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -45,16 +45,16 @@ export const MovieCard = ({ movie }) => {
 };
 
 //Define props constraint for moviecard
-// MovieCard.propTypes = {
-//   movie: PropTypes.shape({
-//     _id: PropTypes.string.isRequired,
-//     Title: PropTypes.string.isRequired,
-//     ImagePath: PropTypes.string.isRequired,
-//     Genre: PropTypes.shape({
-//       Name: PropTypes.string.isRequired,
-//     }).isRequired,
-//     Director: PropTypes.shape({
-//       Name: PropTypes.string.isRequired,
-//     }).isRequired,
-//   }).isRequired
-// };
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    Title: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+    }).isRequired,
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired
+};

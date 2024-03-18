@@ -150,7 +150,6 @@ export const MainView = () => {
               <Row>
                 <ProfileView
                   movies={movies}
-                  onUpdatedUserInfo={() => null}
                 />
               </Row>
             }

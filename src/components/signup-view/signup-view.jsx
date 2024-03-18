@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import PropTypes from 'prop-types';
 export const SignupView = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -87,3 +88,4 @@ export const SignupView = () => {
     </Row>
   );
 };
+
