@@ -1,12 +1,34 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
+import { MovieCard } from '../movie-card/movie-card';
+import { Row, Col } from 'react-bootstrap';
 
-export const MovieView = ({ movie, onBackClick}) => {
+export const MovieView = ({ movies, checkMovies }) => {
+  const { movieID } = useParams();
+
+  console.log(movies);
+  console.log('ID: ' + movieID);
+  const movie = movies.find((m) => m._id === movieID);
+  if (!movie) {
+    return (
+      <>
+        <div>Movie not found</div>
+        <Link to={`/`}>
+          <button className='back-button'>Back</button>
+        </Link>
+      </>
+    );
+  }
+
+  const similarMovies = movies.filter((m) => checkMovies(m, movie));
+  console.log(similarMovies);
   return (
     <div>
       <div>
         <img
           src={movie.ImagePath}
-          alt ={movie.Title}
+          alt={movie.Title}
           height='400px'
         />
       </div>
@@ -26,23 +48,31 @@ export const MovieView = ({ movie, onBackClick}) => {
         <span>Director: </span>
         <span>{movie.Director.Name}</span>
       </div>
-      <button onClick={onBackClick}>Back</button>
+      <Link to={`/`}>
+        <button className='back-button'>Back</button>
+      </Link>
+      {/* Check if there are similar movies and render accordinly */}
+      {similarMovies.length !== 0 && (
+        <>
+          <h2>Similar Movies</h2>
+          <Row>
+            {similarMovies.map((movie) => (
+              <Col
+                className='mb-4 '
+                key={movie._id}
+                md={4}>
+                <MovieCard movie={movie} />
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
     </div>
   );
 };
 
- //Define props constraint for view
- MovieView.propTypes = {
-  movie: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    Title: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired
-    }).isRequired,
-    Director: PropTypes.shape({
-      Name: PropTypes.string.isRequired
-    }).isRequired,
-  }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
+//Define props constraint for view
+MovieView.propTypes = {
+  movies: PropTypes.array.isRequired,
+  checkMovies: PropTypes.func.isRequired,
 };
