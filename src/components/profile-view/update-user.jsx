@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserData,setToken } from '../../redux/reducers/user';
 import { useNavigate } from 'react-router';
 
-export const UpdateUser = ({ user, setUser }) => {
-  const [userD, setUserD] = useState({ UserName: '', Password: '', Email: '', Birthday: '' });
-  const token = localStorage.getItem('token');
+export const UpdateUser = () => {
+  const user = useSelector((state) => state.user.userData);
+  const [formUser, setformUser] = useState({ UserName: '', Password: '', Email: '', Birthday: '' });
+  const token = useSelector((state) => state.user.token);
   const navigate = useNavigate();
   const handleDelete=(user) =>{
     fetch(`https://the-movies-flix-a42e388950f3.herokuapp.com/users/${user.UserName}`, {
@@ -39,14 +42,15 @@ export const UpdateUser = ({ user, setUser }) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify(userD),
+      body: JSON.stringify(formUser),
     })
       .then((response) => response.json())
       .then((data) => {
-        //storing user and token in localStorage object,
+        //storing user in localStorage object,
+        setformUser({ UserName: '', Password: '', Email: '', Birthday: '' });
         localStorage.setItem('user', JSON.stringify(data));
-        setUser(data);
-        setUserD({ UserName: '', Password: '', Email: '', Birthday: '' });
+        setUserData(data);
+
       })
       .catch((e) => {
         console.log(e);
@@ -65,8 +69,8 @@ export const UpdateUser = ({ user, setUser }) => {
           <Form.Label> Username:</Form.Label>
           <Form.Control
             type='text'
-            value={userD.UserName}
-            onChange={(e) => setUserD({ ...userD, UserName: e.target.value })} //set username state with user input
+            value={formUser.UserName}
+            onChange={(e) => setformUser({ ...formUser, UserName: e.target.value })} //set username state with user input
             required
             minLength='3'
           />
@@ -75,8 +79,8 @@ export const UpdateUser = ({ user, setUser }) => {
           <Form.Label> Password:</Form.Label>
           <Form.Control
             type='password'
-            value={userD.Password}
-            onChange={(e) => setUserD({ ...userD, Password: e.target.value })}
+            value={formUser.Password}
+            onChange={(e) => setformUser({ ...formUser, Password: e.target.value })}
             required
           />
         </Form.Group>
@@ -84,8 +88,8 @@ export const UpdateUser = ({ user, setUser }) => {
           <Form.Label> Email:</Form.Label>
           <Form.Control
             type='email'
-            value={userD.Email}
-            onChange={(e) => setUserD({ ...userD, Email: e.target.value })}
+            value={formUser.Email}
+            onChange={(e) => setformUser({ ...formUser, Email: e.target.value })}
             required
           />
         </Form.Group>
@@ -93,8 +97,8 @@ export const UpdateUser = ({ user, setUser }) => {
           <Form.Label> Birthday:</Form.Label>
           <Form.Control
             type='date'
-            value={userD.Birthday}
-            onChange={(e) => setUserD({ ...userD, Birthday: e.target.value.split('T')[0] })}
+            value={formUser.Birthday}
+            onChange={(e) => setformUser({ ...formUser, Birthday: e.target.value.split('T')[0] })}
             required
           />
         </Form.Group>
@@ -103,13 +107,4 @@ export const UpdateUser = ({ user, setUser }) => {
       <button onClick={() => handleDelete(user)}>Delete Account</button>
     </>
   );
-};
-//define the prop types expected by the component
-UpdateUser.propTypes = {
-  user: PropTypes.shape({
-    UserName: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string,
-  }).isRequired,
-  setUser: PropTypes.func.isRequired,
 };

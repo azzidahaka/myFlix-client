@@ -1,13 +1,19 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserData,setToken } from '../../redux/reducers/user';
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = () => {
+  user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  console.log('navbar user:', user);
   return (
     <Navbar
       bg='dark'
       expand='lg'
-      data-bs-theme="dark">
+      data-bs-theme='dark'
+      fixed='top'>
       <Container>
         <Navbar.Brand
           as={Link}
@@ -17,7 +23,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
-            {!user && (
+            {!user.userData && (
               <>
                 <Nav.Link
                   as={Link}
@@ -31,7 +37,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 </Nav.Link>
               </>
             )}
-            {user && (
+            {user.userData && (
               <>
                 <Nav.Link
                   as={Link}
@@ -43,7 +49,14 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                   to='/users/'>
                   Profile
                 </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <Nav.Link
+                  onClick={() => {
+                    localStorage.clear();
+                    dispatch(setToken(null));
+                    dispatch(setUserData(null));
+                  }}>
+                  Logout
+                </Nav.Link>
               </>
             )}
           </Nav>
@@ -52,4 +65,3 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
     </Navbar>
   );
 };
-

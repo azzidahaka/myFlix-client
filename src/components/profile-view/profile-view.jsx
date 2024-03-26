@@ -6,9 +6,11 @@ import { FavoriteMovies } from './favorite-movies';
 import { UserInfo } from './user-info';
 import { Link } from 'react-router-dom';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { UpdateUser } from './update-user';
 
-export const ProfileView = ({ movies }) => {
+export const ProfileView = () => {
+  const movies = useSelector((state) => state.movies.list);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const favoriteMoviesList = movies.filter((m) => user.FavoriteMovies.includes(m._id));
   //console.log(user);
@@ -20,17 +22,12 @@ export const ProfileView = ({ movies }) => {
         <Col
           xs={12}
           sm={4}>
-          <UserInfo
-            name={user.UserName}
-            email={user.Email}
-          />
+          <UserInfo   />
         </Col>
         <Col
           xs={12}
           sm={4}>
           <UpdateUser
-            user={user}
-            setUser={setUser}
           />
         </Col>
       </Row>
@@ -39,7 +36,3 @@ export const ProfileView = ({ movies }) => {
   );
 };
 
-//Define the prop types expected by the component
-ProfileView.propTypes = {
-  movies: PropTypes.array.isRequired,
-};
