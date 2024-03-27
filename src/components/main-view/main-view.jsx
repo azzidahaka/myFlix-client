@@ -23,30 +23,19 @@ export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem('user'));
   const storedToken = localStorage.getItem('token');
   //check if  there is data in localStorage and set state as local Storage if true or null if false
-  console.log('stored user:', storedUser);
+  if ( storedUser) {
+    dispatch(setUserData(storedUser));
+  }
+  if (storedToken) {
+    dispatch(setToken(storedToken));
+  }
   const user = useSelector((state) => state.user.userData);
   const token = useSelector((state) => state.user.token);
   const movies = useSelector((state) => state.movies.list);
-  if (user === null && storedUser) {
-    dispatch(setUserData(storedUser));
-  }
-  if (token === null && storedToken) {
-    dispatch(setToken(storedToken));
-  }
 
-  console.log('token:', token);
-  useEffect(() => {
-    if (!token) return; //return if token is empty
 
-    fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/movies', {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((moviesFromApi) => {
-        dispatch(setMovies(moviesFromApi));
-      });
-    console.log('users and toke from local storage:', user);
-  }, [token]); //a dependency array that calls fetch every time token changes
+  console.log('token:', user);
+  //a dependency array that calls fetch every time token changes
 
   //Start on login page if there is no active user
 

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Row } from 'react-bootstrap';
 
 //MovieCard components
 export const MovieCard = ({ movie }) => {
@@ -31,19 +32,18 @@ export const MovieCard = ({ movie }) => {
   };
   return (
     <Card className='h-100 '>
-      <Card.Img
-        variant='top'
-        src={movie.ImagePath}
-      />
+      <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
+        <Card.Img
+          variant='top'
+          src={movie.ImagePath}
+        />
+      </Link>
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director.Name}</Card.Text>
         <Card.Text>{movie.Genre.Name}</Card.Text>
-        <Link to={`/movies/${encodeURIComponent(movie._id)}`}>
-          <Button>More</Button>
-        </Link>
-        {}
-        {!favorite && <Button onClick={() => addFavorite(movie._id)}>Favorite</Button>}
+
+        <Row>{!favorite && <Button onClick={() => addFavorite(movie._id)}>Favorite</Button>}</Row>
       </Card.Body>
     </Card>
   );

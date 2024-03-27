@@ -14,7 +14,19 @@ export const MoviesList = () => {
   const filteredMovies = movies.filter((movie) =>
     movie.Title.toLowerCase().includes(filter)
   );
+  const token = useSelector((state) => state.user.token);
+  useEffect(() => {
+    if (!token) return; //return if token is empty
 
+    fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((moviesFromApi) => {
+        dispatch(setMovies(moviesFromApi));
+      });
+    console.log('users and toke from local storage:', user);
+  }, [token]);
   return (
     <>
       <Row>
