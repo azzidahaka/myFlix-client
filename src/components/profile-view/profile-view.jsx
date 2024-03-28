@@ -10,12 +10,11 @@ import { useSelector } from 'react-redux';
 import { UpdateUser } from './update-user';
 
 export const ProfileView = () => {
+  const user = useSelector((state) => state.user.userData);
   const movies = useSelector((state) => state.movies.list);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+ // const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const favoriteMoviesList = movies.filter((m) => user.FavoriteMovies.includes(m._id));
-  //console.log(user);
-
-  // console.log(favoriteMovies);
+  console.log('favoriteMoviesList', user)
   return (
     <Container>
       <Row>
@@ -31,7 +30,9 @@ export const ProfileView = () => {
           />
         </Col>
       </Row>
-      <FavoriteMovies favoriteMoviesList={favoriteMoviesList} />
+
+      {favoriteMoviesList.length !== 0 && (
+      <FavoriteMovies favoriteMoviesList={favoriteMoviesList} />)}
     </Container>
   );
 };

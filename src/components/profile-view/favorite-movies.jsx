@@ -2,11 +2,16 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Figure, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import './profile-view.scss';
+import { setUserData } from '../../redux/reducers/user';
 
 export const FavoriteMovies = ({ favoriteMoviesList }) => {
+  const dispatch = useDispatch();
+
   const removeFavorite = (movieId) => {
+
     let token = localStorage.getItem('token');
     let user = JSON.parse(localStorage.getItem('user'));
     let url = `https://the-movies-flix-a42e388950f3.herokuapp.com/users/${user.UserName}/movies/${movieId}`;
@@ -19,11 +24,8 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
       .then((response) => response.json())
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data));
-        window.location.reload();
-        //setUser(JSON.parse(localStorage.getItem('user')));
-        console.log(data);
-
-        // setfavoriteMovies(data.FavoriteMovies);
+        dispatch(setUserData(data));
+     
       })
       .catch((error) => {
         console.error(error);
@@ -31,6 +33,7 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
   };
 
   return (
+
     <Card>
       <Card.Body>
         <Row>

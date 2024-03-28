@@ -3,34 +3,36 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUserData,setToken } from '../../redux/reducers/user';
+import { setUserData, setToken } from '../../redux/reducers/user';
 import { useNavigate } from 'react-router';
 
 export const UpdateUser = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userData);
   const [formUser, setformUser] = useState({ UserName: '', Password: '', Email: '', Birthday: '' });
   const token = useSelector((state) => state.user.token);
   const navigate = useNavigate();
-  const handleDelete=(user) =>{
+  const handleDelete = (user) => {
     fetch(`https://the-movies-flix-a42e388950f3.herokuapp.com/users/${user.UserName}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-    })
-      .then((response) => {
-        if (response.ok) {
-          // If the response is ok, clear the local storage
-          alert("Your account has been deleted.");
-          localStorage.clear();
-          navigate('/login');
-          window.location.reload();
-        } else {
-          alert("Something went wrong.");
-        }
-      })
-  }
+    }).then((response) => {
+      if (response.ok) {
+        // If the response is ok, clear the local storage
+        alert('Your account has been deleted.');
+        localStorage.clear();
+        dispatch(setUserData(null));
+        dispatch(setToken(null));
+        navigate('/login');
+
+      } else {
+        alert('Something went wrong.');
+      }
+    });
+  };
   //const [date, setDate] = useState(user.Birthday); //splits the date from the time and stores it in a variable
   const handleSubmit = (event) => {
     event.preventDefault(); //prevents the default behavior of the form which is to reload the entire page
@@ -49,8 +51,7 @@ export const UpdateUser = () => {
         //storing user in localStorage object,
         setformUser({ UserName: '', Password: '', Email: '', Birthday: '' });
         localStorage.setItem('user', JSON.stringify(data));
-        setUserData(data);
-
+        dispatch(setUserData(data));
       })
       .catch((e) => {
         console.log(e);

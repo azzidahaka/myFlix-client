@@ -5,3 +5,4 @@ import userReducer from "./reducers/user";
 export const store = configureStore({
     reducer: { movies: moviesReducer, user: userReducer }
   });
+  console.log('m',moviesReducer)

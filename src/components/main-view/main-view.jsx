@@ -20,22 +20,25 @@ const checkMovies = (movie, selected) => {
 export const MainView = () => {
   //assign variables the value saved in localStorage
   const dispatch = useDispatch();
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-  const storedToken = localStorage.getItem('token');
+
   //check if  there is data in localStorage and set state as local Storage if true or null if false
-  if ( storedUser) {
-    dispatch(setUserData(storedUser));
-  }
-  if (storedToken) {
-    dispatch(setToken(storedToken));
-  }
+
   const user = useSelector((state) => state.user.userData);
   const token = useSelector((state) => state.user.token);
   const movies = useSelector((state) => state.movies.list);
 
+  useEffect(() => {
+    if (!token) return; //return if token is empty
 
-  console.log('token:', user);
-  //a dependency array that calls fetch every time token changes
+    fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((moviesFromApi) => {
+        dispatch(setMovies(moviesFromApi));
+      });
+
+  }, [token]); //a dependency array that calls fetch every time token changes
 
   //Start on login page if there is no active user
 
@@ -110,9 +113,7 @@ export const MainView = () => {
                   />
                 ) : (
                   <>
-                    <Row
-                      className='align-item-stretch'
-                      >
+                    <Row className='align-item-stretch'>
                       <MoviesList />
                     </Row>
                   </>

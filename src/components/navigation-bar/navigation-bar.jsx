@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUserData,setToken } from '../../redux/reducers/user';
 
 export const NavigationBar = () => {
-  user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
-  console.log('navbar user:', user);
+
   return (
     <Navbar
       bg='dark'
@@ -23,7 +23,7 @@ export const NavigationBar = () => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
-            {!user.userData && (
+            {!user && (
               <>
                 <Nav.Link
                   as={Link}
@@ -37,7 +37,7 @@ export const NavigationBar = () => {
                 </Nav.Link>
               </>
             )}
-            {user.userData && (
+            {user && (
               <>
                 <Nav.Link
                   as={Link}

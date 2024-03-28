@@ -25,16 +25,16 @@ export const LoginView = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Login response: ', data);
+
         if (data.user) {
           //storing user and token in localStorage object,
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('token', data.token);
           dispatch(setUserData(data.user));
           dispatch(setToken(data.token));
-          console.log('state of user:', store.getState());
+          
         } else {
-          alert('No such user');
+          alert('Invalid User or Password');
         }
       })
       .catch((e) => {

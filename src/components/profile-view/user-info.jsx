@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 export const UserInfo =() =>{
     const user = useSelector((state) => state.user.userData);
-
+    
     return (
         <>
         <h4>Your Info</h4>

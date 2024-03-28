@@ -7,8 +7,8 @@ import { Row, Col } from 'react-bootstrap';
 export const MovieView = ({ movies, checkMovies }) => {
   const { movieID } = useParams();
 
-  console.log(movies);
-  console.log('ID: ' + movieID);
+
+
   const movie = movies.find((m) => m._id === movieID);
   if (!movie) {
     return (
@@ -22,7 +22,7 @@ export const MovieView = ({ movies, checkMovies }) => {
   }
 
   const similarMovies = movies.filter((m) => checkMovies(m, movie));
-  console.log(similarMovies);
+
   return (
     <div>
       <div>
