@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { MovieCard } from '../movie-card/movie-card';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 export const MovieView = ({ movies, checkMovies }) => {
   const { movieID } = useParams();
@@ -24,14 +24,10 @@ export const MovieView = ({ movies, checkMovies }) => {
   const similarMovies = movies.filter((m) => checkMovies(m, movie));
 
   return (
-    <div>
-      <div>
-        <img
-          src={movie.ImagePath}
-          alt={movie.Title}
-          height='400px'
-        />
-      </div>
+    <Container>
+    <Row>
+
+      <Col>
       <div>
         <span>Title: </span>
         <span>{movie.Title}</span>
@@ -51,7 +47,16 @@ export const MovieView = ({ movies, checkMovies }) => {
       <Link to={`/`}>
         <button className='back-button'>Back</button>
       </Link>
+      </Col>
+      <Col>
+        <img
+          src={movie.ImagePath}
+          alt={movie.Title}
+          height='400px'
+        />
+      </Col>
       {/* Check if there are similar movies and render accordinly */}
+      </Row>
       {similarMovies.length !== 0 && (
         <>
           <h2>Similar Movies</h2>
@@ -67,7 +72,10 @@ export const MovieView = ({ movies, checkMovies }) => {
           </Row>
         </>
       )}
-    </div>
+
+
+
+    </Container>
   );
 };
 
