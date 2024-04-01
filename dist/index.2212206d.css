@@ -73,8 +73,8 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg: #ddcbcb;
-  --bs-body-bg-rgb: 221, 203, 203;
+  --bs-body-bg: #7c5252;
+  --bs-body-bg-rgb: 124, 82, 82;
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
   --bs-secondary-color: #212529bf;
@@ -2653,11 +2653,11 @@ textarea.form-control-lg {
 }
 
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #ddcbcb, 0 0 0 .25rem #383c4440;
+  box-shadow: 0 0 0 1px #7c5252, 0 0 0 .25rem #383c4440;
 }
 
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #ddcbcb, 0 0 0 .25rem #383c4440;
+  box-shadow: 0 0 0 1px #7c5252, 0 0 0 .25rem #383c4440;
 }
 
 .form-range::-moz-focus-outer {
@@ -13190,6 +13190,45 @@ textarea.form-control-lg {
   }
 }
 
+.card-img-top {
+  height: 400px;
+}
+
+.fa-star {
+  color: #ffd43b;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+p, .card-title {
+  color: #fff;
+}
+
+.card {
+  background-color: #212529;
+  border: 1px solid #000;
+}
+
+.animate-card {
+  transition: transform .5s ease-in-out;
+}
+
+.animate-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-info {
+  background-color: #212529;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+span {
+  color: #fff;
+}
+
 .fav-movie {
   justify-content: center;
   margin-bottom: 15px;
@@ -13206,12 +13245,12 @@ textarea.form-control-lg {
 
 .fav-movie figure img {
   justify-self: center;
-  height: 400px;
+  height: 300px;
   margin: auto;
 }
 
 .fav-movie figure figcaption {
-  text-align: center;
+  color: #fff;
 }
 
 .fav-movie button.btn {
@@ -13221,5 +13260,33 @@ textarea.form-control-lg {
 
 .card {
   margin-bottom: 15px;
+}
+
+h1, h2, h3, h4, h5, h6, label {
+  color: #fff;
+}
+
+.user-info {
+  background-color: #212529;
+  border-radius: 10px;
+  margin: 30px;
+  padding: 10px;
+}
+
+.form-control {
+  color: #030303;
+  background-color: #fff;
+}
+
+.form-control:focus {
+  color: #000;
+  background-color: #fff;
+}
+
+.btn {
+  background-color: #7c5252;
+  border-width: 1px;
+  border-color: #ceaeae;
+  margin-top: 12px;
 }
 /*# sourceMappingURL=index.2212206d.css.map */

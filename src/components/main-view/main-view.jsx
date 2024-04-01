@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MovieCard } from '../movie-card/movie-card';
+import { MoviesList } from '../movie-list/movie-list';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { SignupView } from '../signup-view/signup-view';
 import { NavigationBar } from '../navigation-bar/navigation-bar';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, setToken, setUserData } from '../../redux/reducers/user';
+import { setMovies } from '../../redux/reducers/movies';
 
 //Return bool if movie genre are the same as long as the name is not the same
 const checkMovies = (movie, selected) => {
@@ -15,15 +19,14 @@ const checkMovies = (movie, selected) => {
 
 export const MainView = () => {
   //assign variables the value saved in localStorage
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-  const storedToken = localStorage.getItem('token');
-  //check if  there is data in localStorage and set state as local Storage if true or null if false
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
+  const dispatch = useDispatch();
 
-  const [movies, setMovies] = useState([]);
-  // const [selectedMovie, setSelectedMovie] = useState(null);
-  // const [newUser, setNewUser] = useState(null);
+  //check if  there is data in localStorage and set state as local Storage if true or null if false
+
+  const user = useSelector((state) => state.user.userData);
+  const token = useSelector((state) => state.user.token);
+  const movies = useSelector((state) => state.movies.list);
+
   useEffect(() => {
     if (!token) return; //return if token is empty
 
@@ -32,23 +35,20 @@ export const MainView = () => {
     })
       .then((response) => response.json())
       .then((moviesFromApi) => {
-        setMovies(moviesFromApi);
+        dispatch(setMovies(moviesFromApi));
       });
+
   }, [token]); //a dependency array that calls fetch every time token changes
 
   //Start on login page if there is no active user
 
   return (
     <BrowserRouter>
-      <NavigationBar
-        user={user}
-        onLoggedOut={() => {
-          localStorage.clear();
-          setUser(null);
-          setToken(null);
-        }}
-      />
-      <Row className=' vh-100'>
+      <Row className='pl'>
+        <NavigationBar />
+      </Row>
+
+      <Row style={{ marginTop: 70 }}>
         <Routes>
           <Route
             path='/signup'
@@ -72,13 +72,7 @@ export const MainView = () => {
                   <Navigate to='/' />
                 ) : (
                   <Col md={5}>
-                    <LoginView
-                      //set created user and token
-                      onLoggedIn={(user, token) => {
-                        setUser(user);
-                        setToken(token);
-                      }}
-                    />
+                    <LoginView />
                   </Col>
                 )}
               </>
@@ -120,25 +114,8 @@ export const MainView = () => {
                 ) : (
                   <>
                     <Row className='align-item-stretch'>
-                      {movies.map((movie) => (
-                        <Col
-                          className='mb-4 '
-                          key={movie._id}
-                          md={3}>
-                          <MovieCard movie={movie} />
-                        </Col>
-                      ))}
-                      {/* set user and token to null on logout click */}
+                      <MoviesList />
                     </Row>
-                    <button
-                      style={{ width: '100px', height: '30px' }}
-                      onClick={() => {
-                        setUser(null);
-                        setToken(null);
-                        localStorage.clear();
-                      }}>
-                      Logout
-                    </button>
                   </>
                 )}
               </>
@@ -155,7 +132,7 @@ export const MainView = () => {
                   />
                 ) : (
                   <Row>
-                    <ProfileView movies={movies} />
+                    <ProfileView />
                   </Row>
                 )}
               </>

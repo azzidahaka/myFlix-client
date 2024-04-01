@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
-export const LoginView = ({ onLoggedIn  }) => {
+import { useDispatch } from 'react-redux';
+import { setUserData,setToken } from '../../redux/reducers/user';
+import { store } from '../../redux/store';
+export const LoginView = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault(); //prevents the default behavior of the form which is to reload the entire page
     //data object stores user input and passes it to api
@@ -21,56 +25,55 @@ export const LoginView = ({ onLoggedIn  }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Login response: ', data);
+
         if (data.user) {
           //storing user and token in localStorage object,
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('token', data.token);
-          onLoggedIn(data.user, data.token);
+          dispatch(setUserData(data.user));
+          dispatch(setToken(data.token));
+
         } else {
-          alert('No such user');
+          alert('Invalid User or Password');
         }
       })
       .catch((e) => {
         alert('Something went wrong');
+        console.log(e);
       });
   };
   return (
-      <Row>
-        <Col>
-          <Card>
-            <CardBody>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId='formUsername'>
-                  <Form.Label> Username:</Form.Label>
-                  <Form.Control
-                    type='text'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)} //set username state with user input
-                    required
-                    minLength='3'
-                  />
-                </Form.Group>
-                <Form.Group controlId='formPassword'>
-                  <Form.Label> Password:</Form.Label>
-                  <Form.Control
-                    type='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} //set password state with user input
-                    required
-                  />
-                </Form.Group>
-                <button type='submit'>Submit</button>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-
+    <Row className= ''>
+      <Col>
+        <Card>
+          <CardBody>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId='formUsername'>
+                <Form.Label> Username:</Form.Label>
+                <Form.Control
+                  type='text'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)} //set username state with user input
+                  required
+                  minLength='3'
+                />
+              </Form.Group>
+              <Form.Group controlId='formPassword'>
+                <Form.Label> Password:</Form.Label>
+                <Form.Control
+                  type='password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)} //set password state with user input
+                  required
+                />
+              </Form.Group>
+              <Button type='submit'>Submit</Button>
+            </Form>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
-//Define props constraint for loginview
-LoginView.propTypes = {
-  onLoggedIn: PropTypes.func.isRequired,
-};
+

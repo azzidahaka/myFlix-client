@@ -27,14 +27,17 @@ export const SignupView = () => {
         'Content-Type': 'application/json',
       },
     }).then((response) => {
-      if (response.ok) {
-        alert('Signup successful');
-        navigate('/login');
-      } else {
-        alert('Signup failed');
-        console.log(response);
+      if (!response.ok) {
+        return response.text().then((errorText) => {
+          throw new Error(errorText);
+        });
       }
+      alert('Signup successful');
+      navigate('/login');
+    }).catch(error => {
+      alert('Signup failed: ' + error.message);
     });
+
   };
 
   return (
@@ -80,7 +83,7 @@ export const SignupView = () => {
                   required
                 />
               </Form.Group>
-              <button type='submit'>Submit</button>
+              <Button type='submit'>Submit</Button>
             </Form>
           </CardBody>
         </Card>
@@ -88,4 +91,3 @@ export const SignupView = () => {
     </Row>
   );
 };
-

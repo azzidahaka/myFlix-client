@@ -1,20 +1,31 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserData, setToken } from '../../redux/reducers/user';
+import { MoviesFilter } from '../movies-filter/movies-filter';
+import { Row, Col } from 'react-bootstrap';
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = () => {
+  const user = useSelector((state) => state.user.userData);
+  const dispatch = useDispatch();
+
   return (
     <Navbar
       bg='dark'
       expand='lg'
-      data-bs-theme="dark">
-      <Container>
+      data-bs-theme='dark'
+      fixed='top'>
+      <>
         <Navbar.Brand
           as={Link}
-          to='/'>
+          to='/'
+          style={{ paddingLeft: '20px' }}>
           myFlix
         </Navbar.Brand>
+
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
+
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
             {!user && (
@@ -31,6 +42,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 </Nav.Link>
               </>
             )}
+
             {user && (
               <>
                 <Nav.Link
@@ -42,14 +54,21 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                   as={Link}
                   to='/users/'>
                   Profile
-                </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                </Nav.Link>{' '}
+                <Nav.Link
+                  onClick={() => {
+                    localStorage.clear();
+                    dispatch(setToken(null));
+                    dispatch(setUserData(null));
+                  }}>
+                  Logout
+                </Nav.Link>{' '}
+                <MoviesFilter />
               </>
             )}
           </Nav>
         </Navbar.Collapse>
-      </Container>
+      </>
     </Navbar>
   );
 };
-

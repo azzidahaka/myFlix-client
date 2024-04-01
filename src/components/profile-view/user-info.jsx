@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export const UserInfo =({name, email}) =>{
+
+export const UserInfo =() =>{
+    const user = useSelector((state) => state.user.userData);
+    
     return (
         <>
         <h4>Your Info</h4>
-        <p>Name: {name}</p>
-        <p>Email: {email}</p>
+        <p>Name: {user.UserName}</p>
+        <p>Email: {user.Email}</p>
         </>
     )
 }
-//Define the prop types expected by the component
-UserInfo.propTypes = {
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-};
