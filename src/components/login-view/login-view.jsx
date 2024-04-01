@@ -32,7 +32,7 @@ export const LoginView = () => {
           localStorage.setItem('token', data.token);
           dispatch(setUserData(data.user));
           dispatch(setToken(data.token));
-          
+
         } else {
           alert('Invalid User or Password');
         }
@@ -43,7 +43,7 @@ export const LoginView = () => {
       });
   };
   return (
-    <Row>
+    <Row className= ''>
       <Col>
         <Card>
           <CardBody>
@@ -67,7 +67,7 @@ export const LoginView = () => {
                   required
                 />
               </Form.Group>
-              <button type='submit'>Submit</button>
+              <Button type='submit'>Submit</Button>
             </Form>
           </CardBody>
         </Card>

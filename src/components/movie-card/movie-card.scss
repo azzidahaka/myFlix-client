@@ -1,0 +1,33 @@
+// .card {
+//   max-width:250px;
+//   height: 500px;
+// }
+.card-img-top {
+  height: 400px;
+}
+.fa-star {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ffd43b;
+  cursor: pointer;
+}
+
+p {
+  color: #ffffff;
+}
+.card-title {
+  color: #ffffff;
+}
+.card {
+  background-color: #212529;
+  border: 1px solid #000000;
+}
+
+.animate-card {
+  transition: transform 0.5s ease-in-out;
+}
+
+.animate-card:hover {
+  transform: scale(1.05);
+}

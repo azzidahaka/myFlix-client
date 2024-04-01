@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import './profile-view.scss';
 import { setUserData } from '../../redux/reducers/user';
 
-export const FavoriteMovies = ({ favoriteMoviesList }) => {
+export const FavoriteMovies = ({ favoriteMoviesList, }) => {
   const dispatch = useDispatch();
 
   const removeFavorite = (movieId) => {
@@ -25,7 +25,7 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data));
         dispatch(setUserData(data));
-     
+
       })
       .catch((error) => {
         console.error(error);
@@ -73,6 +73,6 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
   );
 };
 //Define props constraint for favorite movies
-FavoriteMovies.propTypes = {
-  favoriteMoviesList: PropTypes.array.isRequired,
-};
+// FavoriteMovies.propTypes = {
+//   favoriteMoviesList: PropTypes.array.isRequired,
+// };

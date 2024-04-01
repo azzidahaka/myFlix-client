@@ -44,11 +44,11 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-      <Row>
+      <Row className='pl'>
         <NavigationBar />
       </Row>
 
-      <Row style={{ marginTop: 55 }}>
+      <Row style={{ marginTop: 70 }}>
         <Routes>
           <Route
             path='/signup'

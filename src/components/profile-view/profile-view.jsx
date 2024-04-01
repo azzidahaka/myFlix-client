@@ -17,7 +17,7 @@ export const ProfileView = () => {
   console.log('favoriteMoviesList', user)
   return (
     <Container>
-      <Row>
+      <Row className='user-info'>
         <Col
           xs={12}
           sm={4}>

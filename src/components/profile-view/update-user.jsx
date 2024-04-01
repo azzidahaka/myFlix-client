@@ -4,6 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserData, setToken } from '../../redux/reducers/user';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 export const UpdateUser = () => {
@@ -103,9 +104,9 @@ export const UpdateUser = () => {
             required
           />
         </Form.Group>
-        <button type='submit'>Update</button>
+        <Button type='submit'>Update</Button>
       </Form>
-      <button onClick={() => handleDelete(user)}>Delete Account</button>
+      <Button onClick={() => handleDelete(user)}>Delete Account</Button>
     </>
   );
 };
