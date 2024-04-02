@@ -46479,6 +46479,7 @@ const MoviesList = ()=>{
     const movies = (0, _reactRedux.useSelector)((state)=>state.movies.list);
     const filter = (0, _reactRedux.useSelector)((state)=>state.movies.filter).trim().toLowerCase();
     const filteredMovies = movies.filter((movie)=>movie.Title.toLowerCase().includes(filter));
+    console.log(window.screen.width);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
             children: movies.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
@@ -46498,7 +46499,7 @@ const MoviesList = ()=>{
                         movie: movie
                     }, void 0, false, {
                         fileName: "src/components/movie-list/movie-list.jsx",
-                        lineNumber: 26,
+                        lineNumber: 27,
                         columnNumber: 15
                     }, undefined)
                 }, movie._id, false, {

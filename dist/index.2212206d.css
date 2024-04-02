@@ -10,10 +10,6 @@
   right: 10px;
 }
 
-p, .card-title {
-  color: #fff;
-}
-
 .card {
   background-color: #212529;
   border: 1px solid #000;

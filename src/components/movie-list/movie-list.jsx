@@ -13,7 +13,7 @@ export const MoviesList = () => {
   const filteredMovies = movies.filter((movie) =>
     movie.Title.toLowerCase().includes(filter)
   );
-
+  console.log(window.screen.width);
   return (
     <>
 
@@ -23,6 +23,7 @@ export const MoviesList = () => {
         ) : (
           filteredMovies.map((movie) => (
             <Col className="mb-4" key={movie._id} xs={6}sm={6} md={4} lg={4} xl={3}>
+
               <MovieCard movie={movie} />
             </Col>
           ))
