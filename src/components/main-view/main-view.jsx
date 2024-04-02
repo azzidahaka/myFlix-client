@@ -76,7 +76,7 @@ export const MainView = () => {
                 ) : (
                   (() => {
                     return (
-                      <Col md={8}>
+                      <Col >
                         <MovieView
                           movies={movies}
                           checkMovies={checkMovies}

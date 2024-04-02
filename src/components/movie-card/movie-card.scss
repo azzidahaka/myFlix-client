@@ -3,7 +3,7 @@
 }
 .fa-star {
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 10px;
   color: #ffd43b;
   cursor: pointer;
@@ -17,7 +17,11 @@ label {
 .card-title.h5 {
   color: #000000;
 }
+.movie-card {
+  margin-left: 20px;
+}
 .card {
+
   background-color: #212529;
   border: 1px solid #000000;
 }

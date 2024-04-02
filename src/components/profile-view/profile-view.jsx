@@ -9,8 +9,8 @@ export const ProfileView = () => {
   const favoriteMoviesList = movies.filter((m) => user.FavoriteMovies.includes(m._id));
   console.log('favoriteMoviesList', user);
   return (
-    <Container>
-      <Row className='user-info'>
+    <Row>
+      <Col className='user-info'>
         <Col
           xs={12}
           sm={4}>
@@ -21,8 +21,8 @@ export const ProfileView = () => {
           sm={4}>
           <UpdateUser />
         </Col>
-      </Row>
+      </Col>
       {favoriteMoviesList.length !== 0 && <FavoriteMovies favoriteMoviesList={favoriteMoviesList} />}
-    </Container>
+    </Row>
   );
 };

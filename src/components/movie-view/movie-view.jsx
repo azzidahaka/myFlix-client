@@ -23,10 +23,10 @@ export const MovieView = ({ movies, checkMovies }) => {
   const similarMovies = movies.filter((m) => checkMovies(m, movie));
   return (
     <Container>
-      <Row className='movie-info'>
+      <Row className='movie-info '>
         <Col>
           <div>
-            <h1>{movie.Title}</h1>
+            <h1 className='movie-title'>{movie.Title}</h1>
           </div>
           <div>
             <span>Description: </span>
@@ -40,18 +40,25 @@ export const MovieView = ({ movies, checkMovies }) => {
             <span>Director: </span>
             <span>{movie.Director.Name}</span>
           </div>
-          <Link to={`/`}>
-            <Button className='back-button'>Back</Button>
-          </Link>
+
         </Col>
-        <Col>
+        <Col
+          lg={4}
+          md={6}
+          xs={12}
+          sm={12}
+          >
           <img
             src={movie.ImagePath}
             alt={movie.Title}
-            height='400px'
+            height='350px'
           />
+
         </Col>
         {/* Check if there are similar movies and render accordinly */}
+        <Link to={`/`}>
+            <Button className='back-button'>Back</Button>
+          </Link>
       </Row>
       {similarMovies.length !== 0 && (
         <>
@@ -61,9 +68,10 @@ export const MovieView = ({ movies, checkMovies }) => {
               <Col
                 className='mb-4 '
                 key={movie._id}
+                lg={4}
                 md={6}
-                xs={7}
-                sm={5}>
+                xs={12}
+                sm={12}>
                 <MovieCard movie={movie} />
               </Col>
             ))}

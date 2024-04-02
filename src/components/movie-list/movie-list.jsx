@@ -17,9 +17,9 @@ export const MoviesList = () => {
       ) : (
         filteredMovies.map((movie) => (
           <Col
-            className='mb-4'
+            className='movie-card mb-4'
             key={movie._id}
-            xs={6}
+            xs={12}
             sm={6}
             md={4}
             lg={4}
