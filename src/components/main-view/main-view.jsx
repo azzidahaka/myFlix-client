@@ -99,9 +99,9 @@ export const MainView = () => {
                   />
                 ) : (
                   <>
-                    <Row className='align-item-stretch'>
+                    <Col >
                       <MoviesList />
-                    </Row>
+                    </Col>
                   </>
                 )}
               </>
@@ -117,9 +117,9 @@ export const MainView = () => {
                     replace
                   />
                 ) : (
-                  <Row>
+                  <Col>
                     <ProfileView />
-                  </Row>
+                  </Col>
                 )}
               </>
             }

@@ -7,7 +7,7 @@ import './index.scss';
 const MyFlixApplication = () => {
   return (
     <Provider store={store}>
-      <Container >
+      <Container  >
         <MainView />
       </Container>
     </Provider>

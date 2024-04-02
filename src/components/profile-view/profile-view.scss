@@ -7,20 +7,24 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     margin: auto;
+    justify-content: center;
     width: 100%;
 
     img {
       margin: auto;
-      height: 300px;
-      justify-self: center;
+      height: 500px;
+      width:100%;
+
     }
     figcaption {
-      color: #ffffff;
+      color: #000000;
+      text-align: center;
     }
   }
   button.btn {
     display: block;
     margin: auto;
+    background-color: #212529;
   }
 }
 .card {
@@ -56,3 +60,4 @@ p{
   border-width: 1px;
   margin-top: 12px;
 }
+

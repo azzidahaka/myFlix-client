@@ -31,15 +31,14 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
     <Card>
       <Card.Body>
         <Row>
-          <Col>
-            <h2>Favorite Movies</h2>
-          </Col>
+          <h2>Favorite Movies</h2>
         </Row>
         <Row>
           {favoriteMoviesList.map((movies) => {
             return (
               <Col
                 xs={12}
+                sm={6}
                 md={6}
                 lg={3}
                 key={movies._id}
@@ -49,6 +48,7 @@ export const FavoriteMovies = ({ favoriteMoviesList }) => {
                   <Figure.Image
                     src={movies.ImagePath}
                     alt={movies.title}
+
                   />
                   <Figure.Caption>{movies.Title}</Figure.Caption>
                 </Figure>

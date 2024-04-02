@@ -9,20 +9,22 @@ export const ProfileView = () => {
   const favoriteMoviesList = movies.filter((m) => user.FavoriteMovies.includes(m._id));
   console.log('favoriteMoviesList', user);
   return (
-    <Row>
-      <Col className='user-info'>
+    <>
+      <Row className='user-info'>
         <Col
           xs={12}
-          sm={4}>
+          sm={6}>
           <UserInfo />
         </Col>
         <Col
-          xs={12}
-          sm={4}>
+          >
           <UpdateUser />
         </Col>
-      </Col>
-      {favoriteMoviesList.length !== 0 && <FavoriteMovies favoriteMoviesList={favoriteMoviesList} />}
-    </Row>
+      </Row>
+      <Row>
+        {' '}
+        {favoriteMoviesList.length !== 0 && <FavoriteMovies favoriteMoviesList={favoriteMoviesList} />}
+      </Row>
+    </>
   );
 };
