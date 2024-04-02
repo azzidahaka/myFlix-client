@@ -1,15 +1,11 @@
-import { Navbar, Container, Nav } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserData, setToken } from '../../redux/reducers/user';
 import { MoviesFilter } from '../movies-filter/movies-filter';
-import { Row, Col } from 'react-bootstrap';
-
 export const NavigationBar = () => {
   const user = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
-
   return (
     <Navbar
       bg='dark'
@@ -23,9 +19,7 @@ export const NavigationBar = () => {
           style={{ paddingLeft: '20px' }}>
           myFlix
         </Navbar.Brand>
-
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
-
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
             {!user && (
@@ -42,7 +36,6 @@ export const NavigationBar = () => {
                 </Nav.Link>
               </>
             )}
-
             {user && (
               <>
                 <Nav.Link

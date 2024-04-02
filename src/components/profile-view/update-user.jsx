@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserData, setToken } from '../../redux/reducers/user';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-
-
 export const UpdateUser = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userData);
@@ -35,11 +32,8 @@ export const UpdateUser = () => {
       }
     });
   };
-  //const [date, setDate] = useState(user.Birthday); //splits the date from the time and stores it in a variable
   const handleSubmit = (event) => {
     event.preventDefault(); //prevents the default behavior of the form which is to reload the entire page
-    //data object stores user input and passes it to api
-
     fetch(`https://the-movies-flix-a42e388950f3.herokuapp.com/users/${user.UserName}`, {
       method: 'PUT',
       headers: {
@@ -60,7 +54,6 @@ export const UpdateUser = () => {
         alert('Something went wrong');
       });
   };
-
   return (
     <>
       {' '}

@@ -1,17 +1,14 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Figure, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Figure, Row, Col, Card } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import './profile-view.scss';
 import { setUserData } from '../../redux/reducers/user';
-
-export const FavoriteMovies = ({ favoriteMoviesList, }) => {
+export const FavoriteMovies = ({ favoriteMoviesList }) => {
   const dispatch = useDispatch();
-
+  //Remove movie from favorite list, calls the API and updates the user data
   const removeFavorite = (movieId) => {
-
     let token = localStorage.getItem('token');
     let user = JSON.parse(localStorage.getItem('user'));
     let url = `https://the-movies-flix-a42e388950f3.herokuapp.com/users/${user.UserName}/movies/${movieId}`;
@@ -25,15 +22,12 @@ export const FavoriteMovies = ({ favoriteMoviesList, }) => {
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data));
         dispatch(setUserData(data));
-
       })
       .catch((error) => {
         console.error(error);
       });
   };
-
   return (
-
     <Card>
       <Card.Body>
         <Row>
@@ -41,7 +35,6 @@ export const FavoriteMovies = ({ favoriteMoviesList, }) => {
             <h2>Favorite Movies</h2>
           </Col>
         </Row>
-
         <Row>
           {favoriteMoviesList.map((movies) => {
             return (
@@ -73,6 +66,6 @@ export const FavoriteMovies = ({ favoriteMoviesList, }) => {
   );
 };
 //Define props constraint for favorite movies
-// FavoriteMovies.propTypes = {
-//   favoriteMoviesList: PropTypes.array.isRequired,
-// };
+FavoriteMovies.propTypes = {
+  favoriteMoviesList: PropTypes.array.isRequired,
+};

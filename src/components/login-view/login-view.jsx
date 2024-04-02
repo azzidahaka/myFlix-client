@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstrap';
+import { Button, Form, Row, Col, Card, CardBody } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { setUserData,setToken } from '../../redux/reducers/user';
-import { store } from '../../redux/store';
+import { setUserData, setToken } from '../../redux/reducers/user';
 export const LoginView = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  //function to handle form submission
   const handleSubmit = (event) => {
     event.preventDefault(); //prevents the default behavior of the form which is to reload the entire page
     //data object stores user input and passes it to api
@@ -15,7 +14,6 @@ export const LoginView = () => {
       UserName: username,
       Password: password,
     };
-
     fetch('https://the-movies-flix-a42e388950f3.herokuapp.com/login', {
       method: 'POST',
       headers: {
@@ -25,14 +23,12 @@ export const LoginView = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-
         if (data.user) {
-          //storing user and token in localStorage object,
+          //storing user and token in localStorage object,while updating the state of the user
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('token', data.token);
           dispatch(setUserData(data.user));
           dispatch(setToken(data.token));
-
         } else {
           alert('Invalid User or Password');
         }
@@ -43,7 +39,7 @@ export const LoginView = () => {
       });
   };
   return (
-    <Row className= ''>
+    <Row className=''>
       <Col>
         <Card>
           <CardBody>
@@ -75,5 +71,3 @@ export const LoginView = () => {
     </Row>
   );
 };
-
-

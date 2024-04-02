@@ -5,10 +5,10 @@ import { MovieCard } from '../movie-card/movie-card';
 import { Row, Col, Container } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import './movie-view.scss';
-
 export const MovieView = ({ movies, checkMovies }) => {
   const { movieID } = useParams();
   const movie = movies.find((m) => m._id === movieID);
+  //If movie is not found, render a message
   if (!movie) {
     return (
       <>
@@ -19,9 +19,8 @@ export const MovieView = ({ movies, checkMovies }) => {
       </>
     );
   }
-
+  //Filter similar movies
   const similarMovies = movies.filter((m) => checkMovies(m, movie));
-
   return (
     <Container>
       <Row className='movie-info'>
@@ -62,7 +61,9 @@ export const MovieView = ({ movies, checkMovies }) => {
               <Col
                 className='mb-4 '
                 key={movie._id}
-                md={6} xs={7} sm={5}>
+                md={6}
+                xs={7}
+                sm={5}>
                 <MovieCard movie={movie} />
               </Col>
             ))}
@@ -72,7 +73,6 @@ export const MovieView = ({ movies, checkMovies }) => {
     </Container>
   );
 };
-
 //Define props constraint for view
 MovieView.propTypes = {
   movies: PropTypes.array.isRequired,
