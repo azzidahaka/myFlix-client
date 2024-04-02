@@ -27,16 +27,15 @@
   margin-bottom: 15px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #ffffff;
+.profile {
+  color: #ffffff; // set color to black
 }
 label {
   color: #ffffff;
+}
+p{
+  color: #ffffff;
+
 }
 .user-info {
   background-color: #212529;
@@ -46,12 +45,10 @@ label {
 }
 
 .form-control {
-  color: #030303;
-  background-color: #ffffff;
+  background-color: #ffffff !important ;
 }
 .form-control:focus {
-  background-color: #ffffff;
-  color: #000000;
+  color: #000000 !important;
 }
 .btn {
   background-color: #7c5252;

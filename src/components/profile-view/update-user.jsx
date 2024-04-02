@@ -7,6 +7,7 @@ import { setUserData, setToken } from '../../redux/reducers/user';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
+
 export const UpdateUser = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userData);
@@ -66,7 +67,7 @@ export const UpdateUser = () => {
       <Form
         className='profile-form'
         onSubmit={handleSubmit}>
-        <h2>Want to change some info?</h2>
+        <h2 className='profile'>Want to change some info?</h2>
         <Form.Group controlId='formUsername'>
           <Form.Label> Username:</Form.Label>
           <Form.Control

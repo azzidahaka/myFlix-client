@@ -9,6 +9,7 @@ import { Button, Form, Row, Col, Card, CardBody, Container } from 'react-bootstr
 import { useSelector } from 'react-redux';
 import { UpdateUser } from './update-user';
 
+
 export const ProfileView = () => {
   const user = useSelector((state) => state.user.userData);
   const movies = useSelector((state) => state.movies.list);

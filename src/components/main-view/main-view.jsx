@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser, setToken, setUserData } from '../../redux/reducers/user';
 import { setMovies } from '../../redux/reducers/movies';
 
+
 //Return bool if movie genre are the same as long as the name is not the same
 const checkMovies = (movie, selected) => {
   return movie.Genre.Name === selected.Genre.Name && movie._id !== selected._id;
